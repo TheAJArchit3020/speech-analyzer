@@ -1,0 +1,46 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "start-vite",
+      "type": "shell",
+      "command": "npm run dev",
+      "options": {
+        "cwd": "${workspaceFolder}/desktop"
+      },
+      "isBackground": true,
+      "problemMatcher": {
+        "pattern": {
+          "regexp": "^$",
+          "file": 1,
+          "location": 2,
+          "message": 3
+        },
+        "background": {
+          "activeOnStart": true,
+          "beginsPattern": ".*",
+          "endsPattern": ".*Local:.*http://localhost:5173.*|.*ready in.*"
+        }
+      },
+      "runOptions": {
+        "runOn": "default"
+      }
+    },
+    {
+      "label": "build",
+      "type": "npm",
+      "script": "build",
+      "path": "${workspaceFolder}/desktop",
+      "problemMatcher": [
+        "$tsc"
+      ]
+    },
+    {
+      "label": "rebuild-native",
+      "type": "npm",
+      "script": "rebuild",
+      "path": "${workspaceFolder}/desktop",
+      "problemMatcher": []
+    }
+  ]
+}

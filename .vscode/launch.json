@@ -1,0 +1,70 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Debug Main Process",
+      "type": "node",
+      "request": "launch",
+      "cwd": "${workspaceFolder}/desktop",
+      "runtimeExecutable": "${workspaceFolder}/desktop/node_modules/.bin/electron",
+      "windows": {
+        "runtimeExecutable": "${workspaceFolder}/desktop/node_modules/.bin/electron.cmd"
+      },
+      "args": ["."],
+      "outputCapture": "std",
+      "env": {
+        "NODE_ENV": "development"
+      },
+      "console": "integratedTerminal",
+      "sourceMaps": true,
+      "skipFiles": [
+        "<node_internals>/**"
+      ]
+    },
+    {
+      "name": "Debug Renderer Process",
+      "type": "chrome",
+      "request": "attach",
+      "port": 9222,
+      "webRoot": "${workspaceFolder}/desktop/src",
+      "timeout": 30000,
+      "urlFilter": "http://localhost:5173/**"
+    },
+    {
+      "name": "Debug Full App (Main + Renderer)",
+      "type": "node",
+      "request": "launch",
+      "cwd": "${workspaceFolder}/desktop",
+      "runtimeExecutable": "${workspaceFolder}/desktop/node_modules/.bin/electron",
+      "windows": {
+        "runtimeExecutable": "${workspaceFolder}/desktop/node_modules/.bin/electron.cmd"
+      },
+      "args": ["."],
+      "outputCapture": "std",
+      "env": {
+        "NODE_ENV": "development",
+        "ELECTRON_RUN_AS_NODE": "0"
+      },
+      "console": "integratedTerminal",
+      "sourceMaps": true,
+      "skipFiles": [
+        "<node_internals>/**"
+      ]
+    }
+  ],
+  "compounds": [
+    {
+      "name": "Debug Electron App",
+      "configurations": [
+        "Debug Main Process",
+        "Debug Renderer Process"
+      ],
+      "stopAll": true,
+      "presentation": {
+        "hidden": false,
+        "group": "",
+        "order": 1
+      }
+    }
+  ]
+}
