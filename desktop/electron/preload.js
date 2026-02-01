@@ -44,6 +44,16 @@ try {
       insertTranscriptEvent: (event) => ipcRenderer.invoke('db:insertTranscriptEvent', event),
       listTranscriptEvents: (sessionId, limit) => ipcRenderer.invoke('db:listTranscriptEvents', sessionId, limit),
     },
+    audio: {
+      listOutputDevices: () => ipcRenderer.invoke('audio:listOutputs'),
+      startLoopback: (outputDeviceId) => ipcRenderer.invoke('audio:startLoopback', outputDeviceId),
+      stopLoopback: () => ipcRenderer.invoke('audio:stopLoopback'),
+      onLoopbackLevel: (cb) => {
+        const handler = (_event, data) => cb({ level: data?.level });
+        ipcRenderer.on('audio:loopbackLevel', handler);
+        return () => ipcRenderer.removeListener('audio:loopbackLevel', handler);
+      },
+    },
     // Expose error reporting function for renderer to use
     reportError: (error, context) => {
       const errorObj = error instanceof Error ? error : new Error(String(error));
